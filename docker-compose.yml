@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  themanager:
+    image: ${DOCKER_REGISTRY-}themanager
+    container_name: themanager
+    build:
+      context: .
+      dockerfile: TheManager/Dockerfile
+    depends_on:
+      - thelogger
+      
+  thecollector:
+    image: ${DOCKER_REGISTRY-}thecollector
+    container_name: thecollector
+    build:
+      context: .
+      dockerfile: TheCollector/Dockerfile
+    depends_on:
+      - thelogger
+
+  thelogger:
+    image: swcc/docker-graylog2
+    container_name: thelogger
