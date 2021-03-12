@@ -5,23 +5,27 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/certs/MyKey.crt
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /docker/datamalgamation/data/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
+      - /root/certs:/root/certs/
 
   thecollector:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/certs/MyKey.crt
     ports:
       - "9200:80"
       - "9100:443"
     volumes:
       - /docker/datamalgamation/data/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
+      - /root/certs:/root/certs/
 
   thelogger:
     environment:
@@ -32,3 +36,4 @@ services:
     volumes:
       - /docker/datamalgamation/data/graylog2/data:/var/opt/graylog2/data
       - /docker/datamalgamation/data/graylog2/logs:/var/log/graylog2
+      - /root/certs:/root/certs/
