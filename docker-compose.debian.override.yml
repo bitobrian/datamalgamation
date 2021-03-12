@@ -37,3 +37,14 @@ services:
       - /docker/datamalgamation/data/graylog2/data:/var/opt/graylog2/data
       - /docker/datamalgamation/data/graylog2/logs:/var/log/graylog2
       - /root/certs:/root/certs/
+
+  theportainer:    
+    ports:
+      - "9000:9000"
+      - "8000:8000"    
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:  

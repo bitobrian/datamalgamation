@@ -22,3 +22,11 @@ services:
   thelogger:
     image: swcc/docker-graylog2
     container_name: thelogger
+    depends_on: 
+      - theportainer
+
+  theportainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    
