@@ -23,17 +23,6 @@ services:
       - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
       - /root/certs:/root/certs/
 
-  thelogger:
-    environment:
-      - GRAYLOG2_PASSWORD=graylog
-    ports:
-      - "9000:9000"
-      - "12201:12201"
-    volumes:
-      - /docker/datamalgamation/data/graylog2/data:/var/opt/graylog2/data
-      - /docker/datamalgamation/data/graylog2/logs:/var/log/graylog2
-      - /root/certs:/root/certs/
-
   theportainer:    
     ports:
       - "9300:9000"
@@ -41,6 +30,20 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+  graylog:
+    environment:
+      - GRAYLOG_HTTP_EXTERNAL_URI="http://0.0.0.0:9000/"
+    ports:
+      - "9000:9000"
+      - "12201:12201"
+      - "1514:1514"
+
+  elasticsearch:
+    environment:
+      - "http.host=0.0.0.0"
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 
 volumes:
   portainer_data:  

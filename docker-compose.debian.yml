@@ -19,14 +19,25 @@ services:
     depends_on:
       - thelogger
 
-  thelogger:
-    image: swcc/docker-graylog2
-    container_name: thelogger
-    depends_on: 
-      - theportainer
-
   theportainer:
     image: portainer/portainer
     command: -H unix:///var/run/docker.sock
     restart: always
-    
+
+  graylog:
+    image: graylog/graylog:4.0
+    container_name: graylog
+    depends_on: 
+      - theportainer
+
+  mongo:
+    image: mongo:4.2
+    container_name: mongo
+    depends_on: 
+      - theportainer
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    container_name: elasticsearch
+    depends_on: 
+      - theportainer
