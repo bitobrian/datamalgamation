@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  themanager:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - /docker/datamalgamation/data/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
+
+  thecollector:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - /docker/datamalgamation/data/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
+
+  thelogger:
+    environment:
+      - GRAYLOG2_PASSWORD=graylog
+    ports:
+      - "9000:9000"
+      - "12201:12201"
+    volumes:
+      - /docker/datamalgamation/data/graylog2/data:/var/opt/graylog2/data
+      - /docker/datamalgamation/data/graylog2/logs:/var/log/graylog2
