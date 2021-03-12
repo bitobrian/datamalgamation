@@ -6,8 +6,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
-      - "443"
+      - "80:80"
+      - "443:443"
     volumes:
       - /docker/datamalgamation/data/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
@@ -17,8 +17,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
-      - "443"
+      - "9200:80"
+      - "9100:443"
     volumes:
       - /docker/datamalgamation/data/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - /docker/datamalgamation/data/ASP.NET/Https:/root/.aspnet/https:ro
