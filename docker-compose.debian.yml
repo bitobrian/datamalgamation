@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: TheManager/Dockerfile
     depends_on:
-      - thelogger
+      - graylog
       
   thecollector:
     image: thecollector
@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: TheCollector/Dockerfile
     depends_on:
-      - thelogger
+      - graylog
 
   theportainer:
     image: portainer/portainer
