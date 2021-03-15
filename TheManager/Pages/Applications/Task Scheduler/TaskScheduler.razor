@@ -1,0 +1,15 @@
+﻿@page "/application/taskscheduler"
+<h3>TaskScheduler</h3>
+<MudPaper Width="100%">
+    <MudList Clickable="@Clickable" Dense="@Dense" DisableGutters="@Gutters">
+        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" />
+        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Primary" />
+        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+    </MudList>
+</MudPaper>
+
+@code {
+    public bool Dense { get; set; } = true;
+    public bool Clickable { get; set; } = true;
+    public bool Gutters { get; set; } = true;
+}

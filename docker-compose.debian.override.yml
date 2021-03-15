@@ -33,7 +33,7 @@ services:
 
   graylog:
     environment:
-      - GRAYLOG_HTTP_EXTERNAL_URI="http://0.0.0.0:9000/"
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://0.0.0.0:9000/
     ports:
       - "9000:9000"
       - "12201:12201"

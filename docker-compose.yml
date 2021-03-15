@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: TheManager/Dockerfile
     depends_on:
-      - thelogger
+      - graylog
       
   thecollector:
     image: ${DOCKER_REGISTRY-}thecollector
@@ -17,8 +17,31 @@ services:
       context: .
       dockerfile: TheCollector/Dockerfile
     depends_on:
-      - thelogger
+      - graylog
 
-  thelogger:
-    image: swcc/docker-graylog2
-    container_name: thelogger
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+
+  postgresql:
+    image: 'docker.io/bitnami/postgresql:11-debian-10'
+    container_name: postgresql
+
+  graylog:
+    image: graylog/graylog:4.0
+    container_name: graylog
+    depends_on:
+      - elasticsearch
+      - mongo
+
+  mongo:
+    image: mongo:4.2
+    container_name: mongo
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    container_name: elasticsearch
+    depends_on:
+      - mongo

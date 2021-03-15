@@ -6,7 +6,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
+      - "9002:80"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -17,18 +17,47 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
+      - "9003:80"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-  thelogger:
-    environment:
-      - GRAYLOG2_PASSWORD=graylog
+  portainer:    
     ports:
       - "9000:9000"
-      - "12201:12201"
+      - "8300:8000"    
     volumes:
-      - ${APPDATA}/graylog2/data:/var/opt/graylog2/data
-      - ${APPDATA}/graylog2/logs:/var/log/graylog2
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  postgresql:  
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      - 'POSTGRESQL_DATABASE=blog_db'
+      - 'POSTGRESQL_USERNAME=app_svc'
+      - 'POSTGRESQL_PASSWORD=8Q37FFy5TvWKcZy9'
+
+  graylog:
+    environment:
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9001/
+      - elasticsearch_hosts=http://elasticsearch:9200
+    ports:
+      - "9001:9000"
+      - "12201:12201"
+      - "1514:1514"
+
+  elasticsearch:
+    environment:
+      - "http.host=0.0.0.0"
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+volumes:
+  portainer_data:  
